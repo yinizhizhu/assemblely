@@ -1,0 +1,68 @@
+TITLE Integer Summation Program
+
+INCLUDE Irvine32.inc
+.data
+	Ask BYTE "How many integers are there? ", 0
+	str1 BYTE "Please enter a signed integer", 0
+	str2 BYTE "The sum of the integers is: ", 0
+	str3 BYTE ": ", 0
+	array DWORD 90 DUP(?)
+	Num1 DWORD ?
+	Num2 DWORD ?
+.code
+main PROC
+	call Clrscr
+
+	mov edx, OFFSET Ask
+	call WriteString
+	call Crlf
+	call ReadInt
+	mov ecx, eax
+	mov Num1, eax
+
+	mov esi, OFFSET array
+	call readIntegers
+	call arraySum
+	call showRe
+	exit
+main ENDP
+readIntegers PROC USES ecx edx esi		;to use 'USES' is to make sure not to change the value of other registers
+L1:
+	mov edx, OFFSET str1
+	call WriteString
+
+	mov ebx, Num1
+	mov Num2, ebx
+	sub Num2, ecx
+	mov eax, Num2
+	inc eax
+	call WriteDec
+	mov edx, OFFSET str3
+	call WriteString
+
+	call ReadInt
+	call Crlf
+	mov [esi], eax			;to store the value of each elements
+	add esi, TYPE DWORD
+	loop L1
+
+	ret
+readIntegers ENDP
+
+arraySum PROC USES esi ecx
+	mov eax, 0
+L1:
+	add eax, [esi]
+	add esi, TYPE DWORD
+	loop L1
+	ret
+arraySum ENDP
+
+showRe PROC USES edx
+	mov edx, OFFSET str2
+	call WriteString
+	call WriteInt
+	call Crlf
+	ret
+showRe ENDP
+END main

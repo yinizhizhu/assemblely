@@ -1,0 +1,107 @@
+TITLE  BubbleSort Procedure                  (BSort.asm)
+
+;This program is to sort an array by BubbleSort
+;Written by Li Jiahe, 2014/10/25
+;The student ID: 110310123
+
+INCLUDE Irvine32.inc
+
+.data
+	Qes1 BYTE "Please enter the number of element of an array: ", 0
+	Str0 BYTE "Please enter an integer", 0
+	Str1 BYTE ": ", 0
+	Str2 BYTE "The element of this array: ", 0
+	Str3 BYTE "Bubblesort starting:", 0
+	pArray DWORD 99 DUP(?)
+	Count DWORD ?
+	Temp DWORD ?
+.code
+main PROC
+;----------------------------------------------------------
+;BubbleSort PROC USES eax ecx esi,
+;	pArray:PTR DWORD,		; pointer to array
+;	Count:DWORD			; array size
+;; Sort an array of 32-bit signed integers in ascending order
+; using the bubble sort algorithm.
+; Receives: pointer to array, array size
+; Returns: nothing
+;-----------------------------------------------------------
+	
+	call readData
+	call BubbleSort
+	exit
+main ENDP
+BubbleSort PROC							;to sort the array and show the array which is sorted in ascending order
+	mov ecx, Count
+	dec ecx
+	mov esi, OFFSET pArray
+L1:
+	mov ebx, ecx
+	push ecx							;to store the value of ecx
+	mov ecx, ebx
+	mov edi, OFFSET pArray
+	L2:
+		mov esi, edi					;start BubbleSort
+		add edi, TYPE pArray
+		mov eax, [esi]
+		cmp eax, [edi]
+		jl L3
+		mov eax, [esi]
+		xchg eax, [edi]
+		mov [esi], eax
+		L3:
+			push ecx
+			;call showArray				;to show the every step of sorting
+			pop ecx
+			loop L2
+	pop ecx
+	loop L1
+	call showArray						;to show the array
+	ret
+BubbleSort ENDP
+
+readData PROC							;to get the value which we need to know
+	mov edx, OFFSET Qes1
+	call WriteString
+	call ReadInt
+	mov Count, eax
+	mov ecx, Count
+	mov esi, OFFSET pArray
+L4:
+	mov edx, OFFSET Str0
+	call WriteString
+	mov eax, Count
+	mov Temp, ecx
+	sub eax, Temp
+	inc eax
+	call WriteDec
+	mov edx, OFFSET Str1
+	call WriteString
+
+	call ReadHex
+	mov [esi], eax
+	add esi, TYPE pArray
+	loop L4
+	
+	call Crlf
+	call Crlf
+	mov edx, OFFSET Str2
+	call WriteString
+	call showArray
+	call Crlf
+	call Crlf
+	call Crlf
+	mov edx, OFFSET Str3
+	call WriteString
+	call Crlf
+	ret
+readData ENDP
+
+showArray PROC
+	mov esi, OFFSET pArray		;to output the array
+	mov ecx, Count
+	mov ebx, TYPE pArray
+	call DumpMem
+	ret
+showArray ENDP
+END main

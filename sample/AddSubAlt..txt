@@ -1,0 +1,20 @@
+TITLE Add and Subtract
+; This program adds and subtracts 32-bit intergers
+
+.386
+.model flat, stdcall
+.stack 4096
+ExitProcess PROTO, dwExitCode:DWORD
+DempRegs PROTO
+
+INCLUDE Irvine32.inc
+.code
+main PROC
+	mov eax, 1000h
+	add eax, 4000h
+	sub eax, 2000h
+	call DumpRegs
+
+	INVOKE ExitProcess, 0
+main ENDP
+END main

@@ -1,0 +1,45 @@
+TITLE Addtion and Sbutraction
+
+INCLUDE Irvine32.inc
+
+.data
+	Rval SDWORD ?
+	Xval SDWORD 26
+	Yval SDWORD 30
+	Zval SDWORD 40
+.code
+main PROC
+	;INC and DEC
+	mov ax, 1000h
+	inc ax
+	dec ax
+	;
+	mov eax, Xval
+	neg eax
+	mov ebx, Yval
+	sub ebx, Zval
+	add eax, ebx
+	mov Rval, eax
+	;零标志的例子
+	mov cx, 1
+	sub cx, 1
+	mov ax, 0FFFFh
+	inc ax
+	;符号标志的例子
+	mov cx, 0
+	sub cx, 1
+	mov ax, 7FFFh
+	add ax, 2
+	;进位标志的励志
+	mov al, 0FFh
+	add al, 1
+	;溢出标志的例子
+	mov al, +127
+	add al, 1
+	mov al, -128
+	sub al, 1
+
+	exit
+
+main ENDP
+END main

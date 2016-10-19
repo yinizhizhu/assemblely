@@ -1,0 +1,18 @@
+TITLE Program Template
+
+;程序的描述
+;作者
+;创建日期
+;修改
+;日期和修改者
+
+INCLUDE Irvine32.inc
+.data
+	;（插入变量）
+.code
+main PROC
+	;(插入和执行代码)
+	exit
+main ENDP
+	;(插入其他子程序)
+END main

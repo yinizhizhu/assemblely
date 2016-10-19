@@ -1,0 +1,29 @@
+TITLE Add all the elements of an array
+
+INCLUDE Irvine32.inc
+.data
+	HINT BYTE  "The result is: ", 0
+	A DWORD 20, 40, 50, 60, 70
+.code
+main PROC
+	push esi
+	push ecx
+	mov eax, 0
+	mov esi, OFFSET A
+	mov ecx, LENGTHOF A
+L1:
+	add eax, [esi]
+	add esi, TYPE A
+	loop L1
+
+	mov edx, OFFSET HINT
+	call WriteString
+	call WriteInt
+	call Crlf
+
+	pop ecx
+	pop esi
+
+	exit
+main ENDP
+END main

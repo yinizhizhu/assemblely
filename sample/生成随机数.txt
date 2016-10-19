@@ -1,0 +1,37 @@
+TITLE Link Library Test #2
+
+INCLUDE Irvine32.inc
+TAB = 9					;the ASCII of the Tab
+.code
+main PROC
+	call Randomize		;to initial the seed of the random
+	call Rand1
+	call Rand2
+	exit				;to exit form the CPU
+main ENDP
+;后面的过程为函数部分，即可以放在后面
+Rand1 PROC
+	mov ecx, 10
+L1:	call Random32
+	call WriteDec		;以无符号十进制数格式显示
+	mov al, TAB			;水平制表符
+	call WriteChar		;显示水平制表符
+	loop L1
+	call Crlf
+	ret
+Rand1 ENDP
+
+Rand2 PROC
+;生成10个在范围-50~49之间的伪随机整数
+	mov ecx, 10		;循环10次
+L2:	mov eax, 100	;0~99之间的值
+	call RandomRange
+	sub eax, 50
+	call WriteInt	;以有符号十进制数格式显示
+	mov al, TAB
+	call WriteChar	;输出水平制表符
+	loop L2
+	call Crlf
+	ret
+Rand2 ENDP
+END main

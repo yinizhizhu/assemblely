@@ -1,0 +1,48 @@
+TITLE Finite State Machine
+
+INCLUDE Irvine32.inc
+ENTER_KEY = 13
+.data
+	InvalidInputMsg BYTE "Invalid input:", 13, 10, 0
+.code
+main PROC
+	call Clrscr
+StateA:
+	call Getnext
+	cmp al, '+'
+	je StateB
+	call IsDigit
+	jz StateC
+	call DisplayErrorMsg
+	jmp Quit
+StateB:
+	call Getnext
+	call IsDigit
+	jz StateC
+	call DisplayErrorMsg
+	jmp Quit
+StateC:
+	call Getnext
+	call IsDigit
+	jz StateC
+	cmp al, ENTER_KEY
+	je Quit
+	call DisplayErrorMsg
+	jmp Quit
+Quit:
+	call Crlf
+	exit
+main ENDP
+Getnext PROC
+	call ReadChar
+	call WriteChar
+	ret
+Getnext ENDP
+DisplayErrorMsg PROC
+	push edx
+	mov edx, OFFSET InvalidInputMsg
+	call WriteString
+	pop edx
+	ret
+DisplayErrorMsg ENDP
+END main

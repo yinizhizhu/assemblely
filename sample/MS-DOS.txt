@@ -1,0 +1,29 @@
+TITLE MS-DOS
+
+INCLUDE Irvine32.inc
+.data
+	day BYTE ?
+	month BYTE ?
+	year WORD ?
+.code
+main PROC
+	mov al, dl
+	and al, 00011111b
+	mov day, al
+	mov ax, dx
+	shr ax, 5
+	and al, 00001111b
+	mov month, al
+	mov al, dh
+	shr al, 1
+	mov ah, 0
+	add ax, 1980
+	mov year, ax
+
+	mov esi, OFFSET day
+	mov ecx, 4
+	mov edx, TYPE day
+	call DumpMem
+	exit
+main ENDP
+END main

@@ -1,0 +1,15 @@
+TITLE mul
+;written by Lee
+
+INCLUDE Irvine32.inc
+.code
+main PROC
+	mov eax, 3
+	mov ebx, 4
+	imul ebx
+	add eax, 3
+
+	call DumpRegs
+	exit
+main ENDP
+END main

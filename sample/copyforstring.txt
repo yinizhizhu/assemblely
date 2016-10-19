@@ -1,0 +1,24 @@
+TITLE PAGE102NO.7
+;this program is to finish the assignment
+;written by Li Jiahe, 1130310123,	2014/10/13
+INCLUDE Irvine32.inc
+.data
+	source BYTE "This is the source string", 0
+	target BYTE SIZEOF source DUP('#')
+.code
+main PROC
+	mov esi, OFFSET source
+	mov edi, OFFSET target
+	add esi, SIZEOF source
+L1:
+	mov [edi], [esi]
+	add edi, TYPE target
+	sub esi, TYPE source
+	loop L1
+	mov esi, OFFSET target
+	mov ebx, 1
+	mov ecx, SIZEOF target
+	call DumpMem
+	exit
+main ENDP
+END main

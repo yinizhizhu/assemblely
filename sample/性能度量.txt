@@ -1,0 +1,37 @@
+TITLE Link Library Test #3
+;计算执行嵌套循环用去的时间
+INCLUDE Irvine32.inc
+OUTER_LOOP_COUNT = 3
+.data
+startTime DWORD ?
+msg1 BYTE "Please wait...", 0dh, 0ah, 0
+msg2 BYTE "Elapsed milliseconds: ", 0
+.code
+main PROC
+	mov edx, OFFSET msg1
+	call WriteString
+;记录起始时间
+	call GetMSeconds
+	mov startTime, eax
+	mov ecx, OUTER_LOOP_COUNT
+;执行循环
+L1: call innerLoop
+	loop L1
+;显示用去的时间
+	call GetMSeconds
+	sub eax, startTime
+	mov edx, OFFSET msg2
+	call WriteString
+	call WriteDec
+	call Crlf
+	exit
+main ENDP
+innerLoop PROC
+	push ecx				;to save the value of the register
+	mov ecx, 0FFFFFFfFh
+L1: mov eax, eax
+	loop L1
+	pop ecx					;to reset the value of the register
+	ret
+innerLoop ENDP
+END main

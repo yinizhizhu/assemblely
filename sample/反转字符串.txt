@@ -1,0 +1,31 @@
+TITLE Reversing a String
+
+INCLUDE Irvine32.inc
+.data
+aName BYTE "Abraham Lincoln:1234567890", 0
+nameSize = ($ - aName) - 1		;to remove the last one character "\0" which is the end of the string
+
+.code
+main PROC
+;把aName中的每个字符都压入堆栈
+	mov ecx, nameSize
+	mov esi, 0
+L1: movzx eax, aName[esi]
+	push eax
+	inc esi
+	loop L1
+;按堆栈中反序弹出字符
+	mov ecx, nameSize
+	mov esi, 0
+L2: pop eax
+	mov aName[esi], al
+	inc esi
+	loop L2
+
+;显示aName
+	mov edx, OFFSET aName
+	call WriteString
+	call Crlf
+	exit
+main ENDP
+END main

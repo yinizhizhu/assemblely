@@ -1,0 +1,61 @@
+TITLE Add and Sub of two long bit integers
+
+;This program is to get the value the addtion and subtion of two DWORD integers
+;Written by Lee, 2014/10/25
+;Student ID: 1130310123
+
+INCLUDE Irvine32.inc
+.data
+	Str1 BYTE "Please enter the number1:", 0
+	Str2 BYTE "Please enter the number2:", 0
+	Num1 DWORD ?
+	Num2 DWORD ?
+	Re1 BYTE "The sum of the two integers is: ", 0
+	Re2 BYTE "The sub of the two integers is: ", 0
+.code
+main PROC
+	call readIntegers
+
+	call AddTwo
+	mov edx, OFFSET Re1
+	call WriteString
+	call WriteInt
+	call Crlf
+	call Crlf
+
+	call SubTwo
+	mov edx, OFFSET Re2
+	call WriteString
+	call WriteInt
+	call Crlf
+	call Crlf
+
+	exit
+main ENDP
+readIntegers PROC
+	mov edx, OFFSET Str1
+	call WriteString
+	call ReadInt
+	mov Num1, eax
+	call Crlf
+
+	mov edx, OFFSET Str2
+	call WriteString
+	call ReadInt
+	mov Num2, eax
+	call Crlf
+
+readIntegers ENDP
+
+AddTwo PROC
+	mov eax, Num1
+	add eax, Num2
+	ret
+AddTwo ENDP
+
+SubTwo PROC
+	mov eax, Num1
+	sub eax, Num2
+	ret
+SubTwo ENDP
+END main

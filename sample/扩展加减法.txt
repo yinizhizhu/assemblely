@@ -1,0 +1,72 @@
+TITLE Add and Sub for the 256-bits integer
+;This program is to calculate the value of the addtion and subtion for the two 256-bits integers
+;Written by Li Jiahe, 2014/10/27
+;The student ID: 1130310123
+INCLUDE Irvine32.inc
+N = 8
+.data
+	op1 DWORD N DUP(0fe000010h)
+	op2 DWORD N DUP(0ef000100h)
+	sum DWORD N DUP(000000000h)
+.code
+main PROC
+	mov esi, OFFSET op1
+	mov edi, OFFSET op2
+	mov ebx, OFFSET sum
+	mov ecx, N
+	call Extended_Add
+
+	mov esi, OFFSET sum
+	mov ecx, N
+	mov ebx, TYPE sum
+	call DumpMem
+	
+	mov esi, OFFSET op1
+	mov edi, OFFSET op2
+	mov ebx, OFFSET sum
+	mov ecx, N
+	call Extended_Sub
+
+	mov esi, OFFSET sum
+	mov ecx, N
+	mov ebx, TYPE sum
+	call DumpMem
+	exit
+main ENDP
+Extended_Add PROC
+	pushad
+	clc
+L1:
+	mov eax, [esi]
+	adc eax, [edi]
+	pushfd
+	mov [ebx], eax
+	add esi, 4
+	add edi, 4
+	add ebx, 4
+	popfd
+	loop L1
+	mov dword ptr [ebx], 0
+	adc dword ptr [ebx], 0
+	popad
+	ret
+Extended_Add ENDP
+Extended_Sub PROC
+	pushad
+	clc
+L2:
+	mov eax, [esi]
+	sbb eax, [edi]
+	pushfd
+	mov [ebx], eax
+	add esi, 4
+	add edi, 4
+	add ebx, 4
+	popfd
+	loop L2
+	mov dword ptr [ebx], 0
+	sbb dword ptr [ebx], 0
+	popad
+	ret
+Extended_Sub ENDP
+END main

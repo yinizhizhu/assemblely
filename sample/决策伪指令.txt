@@ -1,0 +1,24 @@
+TITLE Conditional Operator
+
+INCLUDE Irvine32.inc
+.data
+	A DWORD 10
+	B DWORD 9
+.code
+main PROC
+	mov eax, B
+	.IF A>eax				;so great!!!!!!!!!!!
+		mov A, 1
+	.ELSEIF A<eax
+		mov B, 2
+	.ELSE
+		mov A, 1
+		mov B, 2
+	.ENDIF
+	mov esi, OFFSET A
+	mov ecx, 2
+	mov ebx, TYPE A
+	call DumpMem
+	exit
+main ENDP
+END main

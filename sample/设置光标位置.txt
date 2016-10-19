@@ -1,0 +1,23 @@
+TITLE SetCursor
+
+INCLUDE Irvine32.inc
+.data
+	XMsg BYTE "X-Coordinate out of range!", 0Dh, 0Ah, 0
+	YMsg BYTE "Y-Coordinate out of range!", 0Dh, 0Ah, 0
+.code
+main PROC
+	.IF (DL < 0) || (DL > 79)
+		mov edx, OFFSET XMsg
+		call WriteString
+		jmp quit
+	.ENDIF
+	.IF (DH < 0) || (DH > 24)
+		mov edx, OFFSET YMsg
+		call WriteString
+		jmp quit
+	.ENDIF
+	call Gotoxy
+quit:
+	exit
+main ENDP
+END main

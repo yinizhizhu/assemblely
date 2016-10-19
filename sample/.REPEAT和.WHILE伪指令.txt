@@ -1,0 +1,29 @@
+TITLE Loop of Another
+
+INCLUDE Irvine32.inc
+.data
+	A DWORD 12
+	B DWORD 18
+.code
+main PROC
+	.REPEAT
+		inc A
+		dec B
+	.UNTIL B <= 0
+	mov esi, OFFSET A
+	mov ecx, 2
+	mov ebx, TYPE A
+	call DumpMem
+
+	.WHILE A > 0
+		dec A
+		inc B
+	.ENDW
+	mov esi, OFFSET A
+	mov ecx, 2
+	mov ebx, TYPE A
+	call DumpMem
+
+	exit
+main ENDP
+END main

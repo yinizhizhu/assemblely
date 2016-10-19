@@ -1,0 +1,20 @@
+TITLE Change
+INCLUDE Irvine32.inc
+.data
+	array BYTE 50 DUP(17)
+.code
+main PROC
+	mov ecx, LENGTHOF array
+	mov esi, OFFSET array
+L1:
+	and BYTE PTR [esi], 10001b
+	inc esi
+	loop L1
+
+	mov esi, OFFSET array
+	mov ecx, LENGTHOF array
+	mov ebx, TYPE array
+	call DumpMem
+	exit
+main ENDP
+END main

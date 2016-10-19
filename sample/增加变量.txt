@@ -1,0 +1,19 @@
+TITLE Add and Subtrace, Version 2
+
+INCLUDE Irvine32.inc
+.data
+	val1 DWORD 1000h
+	val2 DWORD 4000h
+	val3 DWORD 2000h
+	fianlVal DWORD ?
+.code
+main PROC
+	mov eax, val1
+	add eax, val2
+	sub eax, val3
+	mov fianlVal, eax
+	call DumpRegs
+
+	exit
+main ENDP
+END main

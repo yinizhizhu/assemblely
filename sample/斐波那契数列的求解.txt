@@ -1,0 +1,22 @@
+TITLE Fib
+;this program is to get the sequence of fibbonaci
+;written by Li Jiahe, 1130310123,	2014/10/13
+INCLUDE Irvine32.inc
+.data
+	a DWORD 1h, 1h, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+.code
+main PROC
+	mov edi, OFFSET a
+	mov ecx, 10
+	add edi, 2*TYPE a
+L1:
+	mov eax, [edi-2*TYPE a]
+	add eax, [edi-TYPE a]
+	mov [edi], eax
+	add edi, TYPE a
+	loop L1
+
+	call DumpRegs
+	exit
+main ENDP
+END main

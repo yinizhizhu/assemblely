@@ -1,0 +1,36 @@
+TITLE Copy the retverse string
+
+INCLUDE Irvine32.inc
+.data
+	source BYTE "This is the source string", 0
+	target BYTE SIZEOF source - TYPE source DUP(0), 0
+.code
+main PROC
+	mov esi, OFFSET source		;to see the memory
+	mov ecx, LENGTHOF source
+	mov ebx, TYPE source
+	call DumpMem
+
+	mov esi, SIZEOF source - TYPE source
+	mov ecx, SIZEOF source
+	mov edi, 0
+L1:
+	mov al, source[esi]
+	inc edi
+	mov target[edi], al
+	dec esi
+	loop L1
+
+	mov edx, OFFSET source		;to output the string source
+	call WriteString
+	call Crlf
+	mov edx, OFFSET target		;to output the string target
+	call WriteString
+
+	mov esi, OFFSET target		;to see the memory
+	mov ecx, LENGTHOF target
+	mov ebx, TYPE target
+	call DumpMem
+	exit
+main ENDP
+END main

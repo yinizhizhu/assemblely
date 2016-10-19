@@ -1,0 +1,21 @@
+TITLE SetTextColor
+
+INCLUDE Irvine32.inc
+.data
+	str1 BYTE "ƒ·¬Í£¨’‚ «…∂£ø", 0
+	str2 BYTE "Hello!???Sorry! I just cannot hear it! Can you reapeat it again?", 0
+.code
+main PROC
+	mov eax, red + (yellow * 16)
+	call SetTextColor
+	mov edx, OFFSET str1
+	call WriteString
+	call Crlf
+	mov eax, white + (cyan * 16)
+	call SetTextColor
+	mov edx, OFFSET str2
+	call WriteString
+	call Crlf
+	exit
+main ENDP
+END main
